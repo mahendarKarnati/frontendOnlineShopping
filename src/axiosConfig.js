@@ -1,16 +1,17 @@
 import axios from 'axios';
 
-const api = axios.create({
-  // baseURL: 'http://localhost:8080',
-  const baseURL = process.env.REACT_APP_API_URL;
+// ✅ Define baseURL separately
+const baseURL = process.env.REACT_APP_API_URL;
 
-  withCredentials: true, // Needed only if using cookies; optional here
+const api = axios.create({
+  baseURL: baseURL, // or just "baseURL,"
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json"
   }
 });
 
-// Add token to every request
+// ✅ Add token to every request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -23,5 +24,3 @@ api.interceptors.request.use(
 );
 
 export default api;
-
-

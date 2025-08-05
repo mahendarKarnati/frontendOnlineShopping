@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  /* background:url(''); */
+  background-color: rgb(235, 166, 180);
+  background-size:auto;
+  min-height: 100vh;
 }
 
 .App-logo {

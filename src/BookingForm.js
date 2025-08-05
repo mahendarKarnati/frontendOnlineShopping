@@ -1,0 +1,147 @@
+import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+import api from './axiosConfig';
+import { useAuth } from './AuthContext';
+
+
+const telanganaDistricts = [
+  "Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon",
+  "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar",
+  "Khammam", "Komaram Bheem", "Mahabubabad", "Mahabubnagar", "Mancherial",
+  "Medak", "Medchal–Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda",
+  "Narayanpet", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla",
+  "Ranga Reddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad",
+  "Wanaparthy", "Warangal Rural", "Warangal Urban", "Yadadri Bhuvanagiri"
+];
+
+function BookingForm({ product }) {
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(product.price);
+  const [error, setError] = useState('');
+
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+
+
+  const [hno, setHno] = useState('');
+  const [colony, setColony] = useState('');
+  const [village, setVillage] = useState('');
+  const [city, setCity] = useState('');
+  const [landmark, setLandmark] = useState('');
+  const [pincode, setPincode] = useState('');
+const {userId}=useAuth();
+// const [suplierId, setSuplierId] = useState(0);
+console.log('stock is: ',product.stock)
+
+
+  useEffect(() => {
+    setTotalPrice(quantity * product.price);
+  }, [quantity, product.price]);
+
+  const handleBooking = async () => {
+    if (quantity > product.stock) {
+      setError(`Only ${product.stock} item(s) available in stock.`);
+      return;
+    }
+
+    if (!customerName || !customerPhone || !hno || !colony || !village || !city || !landmark || !pincode) {
+      setError('Please fill all the customer details and address fields.');
+      return;
+    }
+
+    const customerAddress = `
+      H.No: ${hno}, ${colony}, ${village}, ${city}, Landmark: ${landmark}, Pincode: ${pincode}
+    `;
+
+    const bookingData = {
+      customerName,
+      userId:userId,
+      suplierId:product.suplierId,
+      customerAddress,
+      customerPhone,
+      quantity,
+      totalPrice,
+      productId: product.id,
+      productName: product.name,
+      productPrice: product.price
+    };
+
+    try {
+      await api.post('/api/bookings/create', bookingData);
+      alert("Booking Successful!");
+      window.location.href = "/product";
+    } catch (err) {
+      console.error(err);
+      alert("Booking Failed");
+    }
+  };
+console.log('user id while booking: ',userId)
+  return (
+    <div className="container border p-3 mt-3">
+      <h3>Order: {product.name} saree</h3>
+      <p>Price per item: ₹{product.price}</p>
+      <p>Available Stock: {product.stock}</p>
+
+      <div className="mb-3">
+        <label className="form-label">Customer Name</label>
+        <input
+          type="text"
+          className="form-control"
+          value={customerName}
+          onChange={(e) => setCustomerName(e.target.value)}
+          required
+        />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Mobile Number</label>
+        <input
+          type="text"
+          className="form-control"
+          value={customerPhone}
+          onChange={(e) => setCustomerPhone(e.target.value)}
+          required
+        />
+      </div>
+
+      <h5 className="mt-3">Address Details</h5>
+      <div className="mb-2">
+        <input type="text" placeholder="H.No" className="form-control mb-2" value={hno} onChange={(e) => setHno(e.target.value)} />
+        <input type="text" placeholder="Colony / Street" className="form-control mb-2" value={colony} onChange={(e) => setColony(e.target.value)} />
+        <input type="text" placeholder="Village / Town" className="form-control mb-2" value={village} onChange={(e) => setVillage(e.target.value)} />
+
+        <select className="form-select mb-2" value={city} onChange={(e) => setCity(e.target.value)} required>
+          <option value="">Select City / District</option>
+          {telanganaDistricts.map((dist) => (
+            <option key={dist} value={dist}>{dist}</option>
+          ))}
+        </select>
+
+        <input type="text" placeholder="Landmark" className="form-control mb-2" value={landmark} onChange={(e) => setLandmark(e.target.value)} />
+        <input type="text" placeholder="Pincode" className="form-control mb-2" value={pincode} onChange={(e) => setPincode(e.target.value)} />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Select Quantity</label>
+        <input
+          type="number"
+          min="1"
+          max={product.stock}
+          className="form-control"
+          value={quantity}
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
+        />
+      </div>
+
+      <h5>Total Price: ₹{totalPrice}</h5>
+
+      {error && <p className="text-danger">{error}</p>}
+
+      <button className="btn btn-primary" onClick={handleBooking}>
+        Order Now
+      </button>
+    </div>
+  );
+}
+
+export default BookingForm;

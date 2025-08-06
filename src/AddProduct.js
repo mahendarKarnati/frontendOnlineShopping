@@ -105,7 +105,7 @@ Object.entries(images).forEach(([key, file]) => {
     try {
       setLoading(true);
       const res = await api.post("/api/products/add", formData, {
-        headers: { "Content-Type": "multipart/form-data" }
+        // headers: { "Content-Type": "multipart/form-data" }
       });
 
       alert("✅ Product added successfully!");

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth } from './AuthContext';
 
 function ProductForm() {
-    const {userId} = useAuth();
+     const {username,userId,token} = useAuth();
   const [product, setProduct] = useState({
     name: '',
     price: '',

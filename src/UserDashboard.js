@@ -74,6 +74,11 @@ function UserDashboard() {
             price: i.productPrice,
             quantity: i.quantity,
             totalPrice: i.totalPrice,
+            bookingStatus:i.bookingStatus,
+            deviveredDate:i.deviveredDate,
+            status:i.status,
+            productName:i.productName,
+            bookingDate:i.bookingDate
           }));
           setBookings(singleData);
           console.log("Booking data:", singleData);
@@ -188,20 +193,30 @@ function UserDashboard() {
                 <th>ID</th>
                 <th>Customer Name</th>
                 <th>Phone</th>
+                <ht>product name</ht>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total Price</th>
+                <th>bookingDate</th>
+                <th>bookingStatus</th>
+                <th>deliveredDate</th>
+                <th>status</th>
               </tr>
             </thead>
             <tbody>
               {bookings.map((b, index) => (
                 <tr key={index}>
-                  <td>{b.id}</td>
+                   <td>{b.id}</td>
                   <td>{b.name}</td>
                   <td>{b.phone}</td>
+                  <td>{b.productName}</td>
                   <td>{b.price}</td>
                   <td>{b.quantity}</td>
                   <td>{b.totalPrice}</td>
+                  <td>{b.bookingDate}</td>
+                  <td>{b.bookingStatus}</td>
+                  <td>{b.deviveredDate}</td>
+                  <td>{b.status}</td>
                 </tr>
               ))}
             </tbody>

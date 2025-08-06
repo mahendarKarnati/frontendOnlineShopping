@@ -106,6 +106,10 @@ Object.entries(images).forEach(([key, file]) => {
       setLoading(true);
       const res = await api.post("/api/products/add", formData, {
         // headers: { "Content-Type": "multipart/form-data" }
+            headers: {
+    Authorization: `Bearer ${token}`
+    // ❌ Don't add Content-Type here!
+  }
       });
 
       alert("✅ Product added successfully!");

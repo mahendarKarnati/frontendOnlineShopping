@@ -1,10 +1,8 @@
 import axios from 'axios';
-
-// ✅ Define baseURL separately
 const baseURL = process.env.REACT_APP_API_URL;
 
 const api = axios.create({
-  baseURL: baseURL, // or just "baseURL,"
+  baseURL: baseURL, 
   withCredentials: true,
   headers: {
     "Content-Type": "application/json"

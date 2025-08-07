@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 import api from './axiosConfig';
 import { useAuth } from './AuthContext';
-import SuccessPopUp from './SuccessPopUp';
+import SuccessPopUp from './SuccessPopup';
 
 
 const telanganaDistricts = [

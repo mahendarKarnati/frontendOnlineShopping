@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from './axiosConfig';
-import SuccessPopup from './SuccessPopup';
+import SuccessPopUp from './SuccessPopup';
 const Register = () => {
   const [form, setForm] = useState({ name:'',email:'', username: '', password: '', role: 'ROLE_USER', mobile: '' });
   const[show, setShow]=useState(false)
@@ -8,8 +8,6 @@ const Register = () => {
   const[message, setMessage]=useState('')
     const [loading, setLoading] = useState(false);
 
-    
-  
 console.log(form.role)
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,8 +109,7 @@ console.log(form.role)
      </select>
       <button type="submit" className="btn btn-primary w-100">register</button>
     </form>
-    
-<SuccessPopup show={show} message={message} title={title}/>
+<SuccessPopUp show={show} message={message} title={title}/>
     </>
   );
 };

@@ -6,12 +6,13 @@ import api from './axiosConfig';
 import BookingForm from './BookingForm';  // The form I gave earlier
 import { useAuth } from './AuthContext';
 
+import SuccessPopUp from './SuccessPopUp';
+
 function BookingPage() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const{role}=useAuth();
     const back=useNavigate();
-
       useEffect(()=>{
     const nonUser= async ()=>{
         if(role!=='ROLE_USER'){
@@ -43,3 +44,7 @@ function BookingPage() {
 }
 
 export default BookingPage;
+
+
+
+

@@ -6,6 +6,7 @@ import { useAuth } from './AuthContext';
 
 function ProductForm() {
      const {username,userId,token} = useAuth();
+     const [uploadPercentage, setUploadPercentage] = useState(0);
   const [product, setProduct] = useState({
     name: '',
     price: '',
@@ -110,7 +111,13 @@ Object.entries(images).forEach(([key, file]) => {
                  "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${token}`
     // ❌ Don't add Content-Type here!
-  }
+  } ,
+  onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadPercentage(percentCompleted);
+        }
       });
 
       alert("✅ Product added successfully!");
@@ -225,8 +232,23 @@ Object.entries(images).forEach(([key, file]) => {
                   <div className="spinner-border text-primary" role="status">
                     <span className="visually-hidden">Loading...</span>
                   </div>
-                </div>
-              )}
+                </div> 
+              )          
+              }
+              {(loading && uploadPercentage > 0) && (
+                  <div className="progress mb-3">
+                    <div
+                      className="progress-bar"
+                      role="progressbar"
+                      style={{ width: `${uploadPercentage}%` }}
+                      aria-valuenow={uploadPercentage}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    >
+                      {uploadPercentage}%
+                    </div>
+                  </div>
+                )}
 
               <div className="d-grid">
                 <button

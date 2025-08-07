@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from './axiosConfig';
-import RegisteredPopup from './RegisteredPopup';
+import SuccessPopup from './SuccessPopup';
 const Register = () => {
   const [form, setForm] = useState({ name:'',email:'', username: '', password: '', role: 'ROLE_USER', mobile: '' });
   const[show, setShow]=useState(false)
@@ -112,7 +112,7 @@ console.log(form.role)
       <button type="submit" className="btn btn-primary w-100">register</button>
     </form>
     
-<RegisteredPopup show={show} message={message} title={title}/>
+<SuccessPopup show={show} message={message} title={title}/>
     </>
   );
 };

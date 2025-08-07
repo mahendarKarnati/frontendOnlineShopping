@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import api from './axiosConfig';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth } from './AuthContext';
-
 function ProductForm() {
      const {username,userId,token} = useAuth();
      const [uploadPercentage, setUploadPercentage] = useState(0);

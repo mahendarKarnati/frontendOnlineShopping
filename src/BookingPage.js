@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 import api from './axiosConfig';
 
 import BookingForm from './BookingForm';  // The form I gave earlier
+import { useAuth } from './AuthContext';
 
 function BookingPage() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-const handleOrder = () => {
-  const user = localStorage.getItem("user");
+    const{role}=useAuth();
+    const back=useNavigate();
 
-  if (!user) {
-    alert("Please log in to order.");
-    Navigate("/login");
-    return;
-  }
+      useEffect(()=>{
+    const nonUser= async ()=>{
+        if(role!=='ROLE_USER'){
+    back(-1)
 
-  // Proceed with ordering logic...
-};
+    alert("Hey you are not user. you don't have permission to book")
+}
+    }
+    nonUser();
+
+  },[role])
+  
+
 
     useEffect(() => {
         api.get(`/api/products/get/${id}`)

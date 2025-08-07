@@ -77,28 +77,28 @@ console.log('stock is: ',product.stock)
   };
 console.log('user id while booking: ',userId)
   return (
-    <div className="container border p-3 mt-3">
+    <div className="container rounded-4 shadow p-4 mt-3 d-flex flex-column align-content-around w-75 bg-light text-primary" style={{minWidth:'450px'}}>
       <h3>Order: {product.name} saree</h3>
-      <p>Price per item: ₹{product.price}</p>
-      <p>Available Stock: {product.stock}</p>
+      <h5>Price per item: <span className='text-success'>₹ {product.price}</span></h5>
+      <h5>Available Stock: <span className={product.stock > 1 ? 'text-success' : 'text-danger'}>{product.stock}</span></h5>
 
       <div className="mb-3">
-        <label className="form-label">Customer Name</label>
         <input
           type="text"
           className="form-control"
           value={customerName}
+          placeholder='Customer Name'
           onChange={(e) => setCustomerName(e.target.value)}
           required
         />
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Mobile Number</label>
         <input
           type="text"
           className="form-control"
           value={customerPhone}
+          placeholder='Mobile Number'
           onChange={(e) => setCustomerPhone(e.target.value)}
           required
         />
@@ -137,7 +137,7 @@ console.log('user id while booking: ',userId)
 
       {error && <p className="text-danger">{error}</p>}
 
-      <button className="btn btn-primary" onClick={handleBooking}>
+      <button className="btn btn-primary fw-bold" onClick={handleBooking}>
         Order Now
       </button>
     </div>

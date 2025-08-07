@@ -51,29 +51,6 @@ function ProductForm() {
     formData.append("suplierId", product.suplierId);
     formData.append("description", product.description);
 
-    // Append all 4 image fields
-    // formData.append("main", images.main);
-    // formData.append("pallu", images.pallu);
-    // formData.append("blouse", images.blouse);
-    // formData.append("border", images.border);
-    // formData.append("showcase", images.showcase);
-
-
-
-//     formData.append("name", product.name);
-// formData.append("price", product.price);
-// formData.append("mrp", product.mrp); // ✅ corrected from earlier bug
-// formData.append("stock", product.stock);
-// formData.append("suplierId", product.suplierId);
-// formData.append("description", product.description);
-
-// ✅ Add this here
-// Object.entries(images).forEach(([key, file]) => {
-//   if (file) {
-//     formData.append(key, file);
-//   }
-// });
-
 console.log("== Form Data Submission ==");
 console.log("name", product.name);
 console.log("price", product.price);

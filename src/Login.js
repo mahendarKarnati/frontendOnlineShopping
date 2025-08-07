@@ -43,7 +43,7 @@ const[loading,setLoading]=useState(false)
       const { token } = response.data;
       const {user}=response.data
         login(user,token); 
-        navigate('/dashboard')
+        navigate(-1)
 
   // this triggers Header to update
   // navigate('/dashboard');

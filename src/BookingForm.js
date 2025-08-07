@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 import api from './axiosConfig';
 import { useAuth } from './AuthContext';
+import SuccessPopUp from './SuccessPopUp';
 
 
 const telanganaDistricts = [
@@ -18,6 +19,10 @@ function BookingForm({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(product.price);
   const [error, setError] = useState('');
+  const[show, setShow]=useState(false)
+  const[title, setTitle]=useState('')
+  const[message, setMessage]=useState('')
+    const [loading, setLoading] = useState(false);
 
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -30,7 +35,6 @@ function BookingForm({ product }) {
   const [landmark, setLandmark] = useState('');
   const [pincode, setPincode] = useState('');
 const {userId}=useAuth();
-// const [suplierId, setSuplierId] = useState(0);
 console.log('stock is: ',product.stock)
 
 
@@ -67,9 +71,15 @@ console.log('stock is: ',product.stock)
     };
 
     try {
+      setLoading(true)
       await api.post('/api/bookings/create', bookingData);
-      alert("Booking Successful!");
+      setLoading(false)
+      setShow(true)
+      setTitle('Confirm')
+      setMessage('your booking was confirmed. you will get our item with in 7 days. thank you for booking')
+      setInterval(() => {
       window.location.href = "/product";
+      }, 3000);
     } catch (err) {
       console.error(err);
       alert("Booking Failed");
@@ -77,6 +87,14 @@ console.log('stock is: ',product.stock)
   };
 console.log('user id while booking: ',userId)
   return (
+    <>
+    {loading && (
+                <div className="text-center mb-3 position-absolute bg-dark h-100 w-100 d-flex align-items-center justify-content-center opacity-50">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+    )}
     <div className="container rounded-4 shadow p-4 mt-3 d-flex flex-column align-content-around w-75 bg-light text-primary" style={{minWidth:'450px'}}>
       <h3>Order: {product.name} saree</h3>
       <h5>Price per item: <span className='text-success'>₹ {product.price}</span></h5>
@@ -140,7 +158,10 @@ console.log('user id while booking: ',userId)
       <button className="btn btn-primary fw-bold" onClick={handleBooking}>
         Order Now
       </button>
+    <SuccessPopUp show={show} title={title} message={message}></SuccessPopUp>
+
     </div>
+    </>
   );
 }
 
